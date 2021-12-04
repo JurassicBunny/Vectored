@@ -1,4 +1,6 @@
-#pragma once
+#ifndef VECTORED_H
+#define VECTORED_H
+
 #include <Eigen/Dense>
 
 namespace Internal {
@@ -22,3 +24,5 @@ public:                \
 } // Vectored
 
 using namespace Vectored;
+
+#endif
