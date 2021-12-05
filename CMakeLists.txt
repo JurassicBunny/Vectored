@@ -15,7 +15,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 find_package(Eigen3 3.3 REQUIRED NO_MODULE)
 
 # add Libvectored static library
-add_library(${PROJECT_NAME} STATIC library.cpp)
+add_library(${PROJECT_NAME} STATIC vectored.cpp)
 
 # link Eigen3 libraries to the target
 target_link_libraries(${PROJECT_NAME} Eigen3::Eigen)
