@@ -23,6 +23,5 @@ public:                \
 
 } // Vectored
 
-using namespace Vectored;
 
 #endif
