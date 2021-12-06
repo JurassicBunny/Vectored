@@ -15,7 +15,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 # add subdirectories
-add_subdirectory(./src)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 # find the Eigen3 package
 find_package(Eigen3 3.3 REQUIRED NO_MODULE)
