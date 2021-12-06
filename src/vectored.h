@@ -8,4 +8,18 @@ public:
     Vectored();
     Vectored(double x, double y, double z);
 };
+
+}
+
+#define VECTORED(name) \
+class name : public Internal::Vectored { \
+public:                \
+    using Internal::Vectored::Vectored;   \
+}
+
+namespace Vectored {
+    VECTORED(Acceleration);
+    VECTORED(Force);
+    VECTORED(Position);
+    VECTORED(Velocity);
 }
