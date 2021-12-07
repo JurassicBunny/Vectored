@@ -31,7 +31,7 @@ install(TARGETS ${PROJECT_NAME}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
-install(FILES vectored.h
+install(FILES src/vectored.h
         DESTINATION include/Vectored)
 
 install(EXPORT ${PROJECT_NAME}Targets
@@ -44,5 +44,5 @@ configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Vectored.cmake.i
         INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Vectored)
 
 install(FILES
-        "${CMAKE_CURRENT_BINARY_DIR}/VectoredConfig.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/cmake/VectoredConfig.cmake"
         DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Vectored)
