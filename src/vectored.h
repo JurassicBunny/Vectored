@@ -20,6 +20,7 @@ public:                \
 namespace Vectored {
     VECTORED(Acceleration);
     VECTORED(Force);
+    VECTORED(Momentum);
     VECTORED(Position);
     VECTORED(Velocity);
 }
