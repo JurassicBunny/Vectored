@@ -6,29 +6,29 @@
 #include <Eigen/Dense>
 
 namespace Internal {
- class SuperVectored{
- protected:
-     Eigen::Vector3d m_vector;
- public:
-     SuperVectored()
-         : m_vector(Eigen::Vector3d(0,0,0)) {}
+class SuperVectored{
+protected:
+    Eigen::Vector3d m_vector;
+public:
+    SuperVectored()
+        : m_vector(Eigen::Vector3d(0,0,0)) {}
 
-     SuperVectored(double x, double y, double z)
-         : m_vector(Eigen::Vector3d(x, y, z)) {};
+    SuperVectored(double x, double y, double z)
+        : m_vector(Eigen::Vector3d(x, y, z)) {};
 
-     explicit SuperVectored(Eigen::Vector3d vector)
-         : m_vector(std::move(vector)){}
+    explicit SuperVectored(Eigen::Vector3d vector)
+        : m_vector(std::move(vector)){}
 
-     Eigen::Vector3d as_vec() { return  this -> m_vector; };
+    Eigen::Vector3d as_vec() { return  this -> m_vector; };
 
-     template<typename T>
-         requires (std::is_base_of_v<SuperVectored, T>)
-     explicit SuperVectored( T &vector) { T result(this -> m_vector); }
-
-     template<typename T>
+    template<typename T>
         requires (std::is_base_of_v<SuperVectored, T>)
-     T as() { T result(this->as_vec()); return result;}
- };
+    explicit SuperVectored(T &vector) { T result(this -> m_vector); }
+
+    template<typename T>
+       requires (std::is_base_of_v<SuperVectored, T>)
+    T as() { T result(this->as_vec()); return result;}
+};
 
 template <typename Class>
 concept VectoredQuantity =
@@ -53,13 +53,4 @@ namespace Vectored {
     VECTORED(Momentum);
     VECTORED(Position);
     VECTORED(Velocity);
-}
-
-int main() {
-    using namespace Vectored;
-    Force force(0,0,0);
-    Acceleration acceleration(force);
-    acceleration.as<Momentum>();
-    Velocity velocity(acceleration);
-    auto result = velocity + acceleration;
 }
