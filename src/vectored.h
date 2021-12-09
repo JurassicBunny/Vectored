@@ -44,7 +44,7 @@ public:                \
     name operator+(T &vectored) { this -> m_vector += vectored.as_vec(); return *this;} \
                        \
     template<Internal::VectoredQuantity T>   \
-    name operator-(T &vectored) { this -> m_vector -= vectored.as_vec(); return *this;}  \
+    name operator-(T &vectored) { this -> m_vector -= vectored.as_vec(); return *this;} \
 }
 
 namespace Vectored {
@@ -53,4 +53,13 @@ namespace Vectored {
     VECTORED(Momentum);
     VECTORED(Position);
     VECTORED(Velocity);
+}
+
+int main() {
+    using namespace  Vectored;
+    Acceleration acceleration(1,3,4);
+    Eigen::Vector3d vector3D(1,3,4);
+    Force force = acceleration.as<Force>();
+
+    force.as_vec() * acceleration.as_vec().squaredNorm();
 }
