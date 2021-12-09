@@ -6,28 +6,30 @@
 #include <Eigen/Dense>
 
 namespace Internal {
-class SuperVectored{
-protected:
-    Eigen::Vector3d m_vector;
+class SuperVectored : public Eigen::Vector3d {
 public:
     SuperVectored()
-        : m_vector(Eigen::Vector3d(0,0,0)) {}
+        : Eigen::Vector3d() {}
 
     SuperVectored(double x, double y, double z)
-        : m_vector(Eigen::Vector3d(x, y, z)) {};
+        : Eigen::Vector3d(x, y, z) {}
 
     explicit SuperVectored(Eigen::Vector3d vector)
-        : m_vector(std::move(vector)){}
+        : Eigen::Vector3d(std::move(vector)) {}
 
-    Eigen::Vector3d as_vec() { return  this -> m_vector; };
+    Eigen::Vector3d as_vec() {
+        return Eigen::Vector3d{this -> x(),
+                               this -> y(),
+                               this -> z()};
+    }
 
     template<typename T>
         requires (std::is_base_of_v<SuperVectored, T>)
-    explicit SuperVectored(T &vector) { T result(this -> m_vector); }
+    explicit SuperVectored(T &vector) { T result(*this); }
 
     template<typename T>
        requires (std::is_base_of_v<SuperVectored, T>)
-    T as() { T result(this->as_vec()); return result;}
+    T as() { T result(*this); return result;}
 };
 
 template <typename Class>
@@ -38,13 +40,13 @@ concept VectoredQuantity =
 #define VECTORED(name) \
 class name : public Internal::SuperVectored { \
 public:                \
-    using Internal::SuperVectored::SuperVectored;  \
+    using Internal::SuperVectored::SuperVectored; \
                        \
-    template<Internal::VectoredQuantity T> \
-    name operator+(T &vectored) { this -> m_vector += vectored.as_vec(); return *this;} \
+    template<Internal::VectoredQuantity T>                    \
+    name operator+(T &other) { this -> as_vec() += other.as_vec(); return {}; } \
                        \
-    template<Internal::VectoredQuantity T>   \
-    name operator-(T &vectored) { this -> m_vector -= vectored.as_vec(); return *this;} \
+    template<Internal::VectoredQuantity T>                    \
+    name operator-(T &other) { this -> as_vec() -= other.as_vec(); return {}; }                       \
 }
 
 namespace Vectored {
