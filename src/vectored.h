@@ -47,21 +47,21 @@ concept VectoredQuantity =
 } // Vectored
 
 #define VECTORED(name) \
-class name : public Internal::SuperVectored {     \
+class name : public Vectored::Internal::SuperVectored {     \
 public:                \
-    using Internal::SuperVectored::SuperVectored; \
+    using Vectored::Internal::SuperVectored::SuperVectored; \
                        \
-    template<Internal::VectoredQuantity T>        \
+    template<Vectored::Internal::VectoredQuantity T>        \
     name operator+(T &other) { this -> as_vec() += other.as_vec(); return {}; } \
                        \
-    template<Internal::VectoredQuantity T>        \
+    template<Vectored::Internal::VectoredQuantity T>        \
     name operator-(T &other) { this -> as_vec() -= other.as_vec(); return {}; } \
 }
 
 namespace Vectored {
-    VECTORED(Acceleration);
-    VECTORED(Force);
-    VECTORED(Momentum);
-    VECTORED(Position);
-    VECTORED(Velocity);
+VECTORED(Acceleration);
+VECTORED(Force);
+VECTORED(Momentum);
+VECTORED(Position);
+VECTORED(Velocity);
 }
