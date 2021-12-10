@@ -7,42 +7,50 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 # project name
 set(PROJECT_NAME Vectored)
 
+
 # set project
 project(${PROJECT_NAME})
 
 # set C++ standard and require true
 set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # find the Eigen3 package
 find_package(Eigen3 3.3 REQUIRED NO_MODULE)
 
 # add library
 add_library(${PROJECT_NAME} INTERFACE)
+# include dirs
+target_include_directories(
+        ${PROJECT_NAME}
+        INTERFACE $<BUILD_INTERFACE:${${PROJECT_NAME}_SOURCE_DIR}/include/Vectored>
+                  $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+
 # link Eigen3 libraries to the target
-target_link_libraries(${PROJECT_NAME}
+target_link_libraries(
+        ${PROJECT_NAME}
         INTERFACE Eigen3::Eigen )
 
-# install targets
+# export the c++ 20 standard when using this library
+target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_20)
+
+# cmake helper functions
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
+# install targets
 install(TARGETS ${PROJECT_NAME}
-        EXPORT ${PROJECT_NAME}Targets
-        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+        EXPORT ${PROJECT_NAME}Targets)
 
-install(FILES src/vectored.h
-        DESTINATION include/Vectored)
+configure_package_config_file(
+        "${PROJECT_SOURCE_DIR}/cmake/Vectored.cmake.in"
+        "${PROJECT_BINARY_DIR}/VectoredConfig.cmake"
+        INSTALL_DESTINATION ${PROJECT_SOURCE_DIR}/cmake/)
 
 install(EXPORT ${PROJECT_NAME}Targets
         FILE ${PROJECT_NAME}Targets.cmake
-        NAMESPACE Vectored::
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Vectored)
+        NAMESPACE ${PROJECT_NAME}::
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/cmake/${PROJECT_NAME})
 
-configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Vectored.cmake.in
-        "${CMAKE_CURRENT_BINARY_DIR}/cmake/VectoredConfig.cmake"
-        INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Vectored)
-
-install(FILES
-        "${CMAKE_CURRENT_BINARY_DIR}/cmake/VectoredConfig.cmake"
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Vectored)
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/Vectored
+        DESTINATION include)
