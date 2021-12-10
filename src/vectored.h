@@ -21,21 +21,19 @@ public:
             : Eigen::Vector3d(std::move(vector)) {}
 
     Eigen::Vector3d as_vec() {
-        return Eigen::Vector3d{this->x(),
-                               this->y(),
-                               this->z()};
+        return Eigen::Vector3d{this -> x(),
+                               this -> y(),
+                               this -> z()};
     }
 
     template<typename T>
-        requires(std::is_base_of_v<SuperVectored, T>)
-    explicit SuperVectored(T &vector) { T result(*this); }
+        requires (std::is_base_of_v<SuperVectored, T>)
+    explicit SuperVectored(T &vector)
+        : Eigen::Vector3d(vector.as_vec()) {}
 
     template<typename T>
-        requires(std::is_base_of_v<SuperVectored, T>)
-    T as() {
-        T result(*this);
-        return result;
-    }
+        requires (std::is_base_of_v<SuperVectored, T>)
+    T as() { T result(*this); return result; }
 };
 
 template<typename Class>
@@ -52,10 +50,10 @@ public:                \
     using Vectored::Internal::SuperVectored::SuperVectored; \
                        \
     template<Vectored::Internal::VectoredQuantity T>        \
-    name operator+(T &other) { this -> as_vec() += other.as_vec(); return {}; } \
+    name operator+(T &other) { name result(this -> as_vec() += other.as_vec()); return result; } \
                        \
     template<Vectored::Internal::VectoredQuantity T>        \
-    name operator-(T &other) { this -> as_vec() -= other.as_vec(); return {}; } \
+    name operator-(T &other) { name result (this -> as_vec() -= other.as_vec()); return result; } \
 }
 
 namespace Vectored {

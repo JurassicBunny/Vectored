@@ -18,9 +18,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 find_package(Eigen3 3.3 REQUIRED NO_MODULE)
 
 # add library
-add_library(${PROJECT_NAME} src/vectored.cpp)
+add_library(${PROJECT_NAME} INTERFACE)
 # link Eigen3 libraries to the target
-target_link_libraries(${PROJECT_NAME} Eigen3::Eigen)
+target_link_libraries(${PROJECT_NAME}
+        INTERFACE Eigen3::Eigen )
 
 # install targets
 include(GNUInstallDirs)
@@ -28,7 +29,6 @@ include(CMakePackageConfigHelpers)
 
 install(TARGETS ${PROJECT_NAME}
         EXPORT ${PROJECT_NAME}Targets
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 install(FILES src/vectored.h
