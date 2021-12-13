@@ -7,7 +7,6 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 # project name
 set(PROJECT_NAME Vectored)
 
-
 # set project
 project(${PROJECT_NAME})
 
@@ -15,24 +14,23 @@ project(${PROJECT_NAME})
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# find the Eigen3 package
-find_package(Eigen3 3.3 REQUIRED NO_MODULE)
-
 # add library
 add_library(${PROJECT_NAME} INTERFACE)
-# include dirs
+
+# include directories
 target_include_directories(
         ${PROJECT_NAME}
-        INTERFACE $<BUILD_INTERFACE:${${PROJECT_NAME}_SOURCE_DIR}/include/Vectored>
+        ${EIGEN_INCLUDE_DIR}
+        INTERFACE $<BUILD_INTERFACE:${PROJECT_NAME}/include/Vectored>
                   $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
-# link Eigen3 libraries to the target
-target_link_libraries(
-        ${PROJECT_NAME}
-        INTERFACE Eigen3::Eigen )
 
 # export the c++ 20 standard when using this library
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_20)
+
+#Google testing
+add_subdirectory(test)
+
 
 # cmake helper functions
 include(GNUInstallDirs)
