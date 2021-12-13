@@ -7,10 +7,19 @@
 
 TEST(Constructor, Constructor)  {
     using namespace Vectored;
-    Acceleration acceleration(1,2,3);
+    Acceleration acceleration(1, 2, 3);
     EXPECT_TRUE(acceleration.x() = 1);
     EXPECT_TRUE(acceleration.y() = 2);
     EXPECT_TRUE(acceleration.z() = 3);
+}
+
+TEST(Constructor, Cast) {
+    using namespace Vectored;
+    Acceleration acceleration(1, 2, 3);
+    Velocity velocity(acceleration);
+    EXPECT_TRUE(velocity.x() = 1);
+    EXPECT_TRUE(velocity.y() = 2);
+    EXPECT_TRUE(velocity.z() = 3);
 }
 
 TEST(Normal, Norm ) {
