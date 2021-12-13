@@ -1,7 +1,3 @@
-//
-// Created by Matthew on 12/13/21.
-//
-
 #include "../include/Vectored/vectored.h"
 #include <gtest/gtest.h>
 
