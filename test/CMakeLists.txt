@@ -1,5 +1,8 @@
-include(FetchContent)
 
+# find the Eigen3 package
+find_package(Eigen3 3.3 REQUIRED NO_MODULE)
+
+include(FetchContent)
 FetchContent_Declare(
         googletest
         # Specify the commit you depend on and update it regularly.
@@ -9,9 +12,8 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-# find the Eigen3 package
-find_package(Eigen3 3.3 REQUIRED NO_MODULE)
-
-
+# Now simply link against gtest or gtest_main as needed. Eg
 add_executable(test testing.cpp)
 target_link_libraries(test gtest_main Eigen3::Eigen)
+
+add_test(NAME Vectored_test COMMAND test)

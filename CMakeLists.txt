@@ -28,10 +28,6 @@ target_include_directories(
 # export the c++ 20 standard when using this library
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_20)
 
-#Google testing
-add_subdirectory(test)
-
-
 # cmake helper functions
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
@@ -52,3 +48,6 @@ install(EXPORT ${PROJECT_NAME}Targets
 
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/Vectored
         DESTINATION include)
+
+#Google testing
+add_subdirectory(test EXCLUDE_FROM_ALL)
