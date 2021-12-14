@@ -17,6 +17,12 @@ TEST(Constructor, Cast) {
     EXPECT_TRUE(velocity.y() = 2);
     EXPECT_TRUE(velocity.z() = 3);
 }
+TEST(Constructor, AS) {
+    using namespace Vectored;
+    Acceleration acceleration(1, 2, 3);
+    Velocity velocity(1, 2, 3);
+    EXPECT_EQ(velocity, acceleration.as<Velocity>());
+}
 
 TEST(Normal, Norm ) {
     using namespace Vectored;
@@ -43,3 +49,4 @@ TEST(Operator, Subtraction) {
     Acceleration answer(-1,-3, -3);
     EXPECT_EQ(result, answer);
 }
+
