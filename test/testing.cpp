@@ -1,7 +1,8 @@
-#include "../include/Vectored/vectored.hpp"
 #include <gtest/gtest.h>
 
-TEST(Constructor, Constructor)  {
+#include "../include/Vectored/vectored.hpp"
+
+TEST(Constructor, Constructor) {
     using namespace Vectored;
     Acceleration acceleration(1, 2, 3);
     EXPECT_TRUE(acceleration.x() = 1);
@@ -24,7 +25,7 @@ TEST(Constructor, AS) {
     EXPECT_EQ(velocity, acceleration.as<Velocity>());
 }
 
-TEST(Normal, Norm ) {
+TEST(Normal, Norm) {
     using namespace Vectored;
     int answer = 1;
     Acceleration acceleration(1, 2, 3);
@@ -35,18 +36,17 @@ TEST(Normal, Norm ) {
 TEST(Operator, Addition) {
     using namespace Vectored;
     Acceleration acceleration(1, 2, 3);
-    Velocity velocity(2,5,6);
+    Velocity velocity(2, 5, 6);
     Acceleration result = acceleration + velocity;
-    Acceleration answer(3,7, 9);
+    Acceleration answer(3, 7, 9);
     EXPECT_EQ(result, answer);
 }
 
 TEST(Operator, Subtraction) {
     using namespace Vectored;
     Acceleration acceleration(1, 2, 3);
-    Velocity velocity(2,5,6);
+    Velocity velocity(2, 5, 6);
     Acceleration result = acceleration - velocity;
-    Acceleration answer(-1,-3, -3);
+    Acceleration answer(-1, -3, -3);
     EXPECT_EQ(result, answer);
 }
-
