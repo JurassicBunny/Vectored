@@ -2,7 +2,8 @@
 
 #include "../include/Vectored/vectored.hpp"
 
-TEST(Constructor, Constructor) {
+TEST(Constructor, Constructor)
+{
     using namespace Vectored;
     Acceleration acceleration(1, 2, 3);
     EXPECT_TRUE(acceleration.x() = 1);
@@ -10,7 +11,8 @@ TEST(Constructor, Constructor) {
     EXPECT_TRUE(acceleration.z() = 3);
 }
 
-TEST(Constructor, Cast) {
+TEST(Constructor, Cast)
+{
     using namespace Vectored;
     Acceleration acceleration(1, 2, 3);
     Velocity velocity(acceleration);
@@ -18,14 +20,16 @@ TEST(Constructor, Cast) {
     EXPECT_TRUE(velocity.y() = 2);
     EXPECT_TRUE(velocity.z() = 3);
 }
-TEST(Constructor, AS) {
+TEST(Constructor, AS)
+{
     using namespace Vectored;
     Acceleration acceleration(1, 2, 3);
     Velocity velocity(1, 2, 3);
     EXPECT_EQ(velocity, acceleration.as<Velocity>());
 }
 
-TEST(Normal, Norm) {
+TEST(Normal, Norm)
+{
     using namespace Vectored;
     int answer = 1;
     Acceleration acceleration(1, 2, 3);
@@ -33,7 +37,8 @@ TEST(Normal, Norm) {
     EXPECT_EQ(result, answer);
 }
 
-TEST(Operator, Addition) {
+TEST(Operator, Addition)
+{
     using namespace Vectored;
     Acceleration acceleration(1, 2, 3);
     Velocity velocity(2, 5, 6);
@@ -42,7 +47,8 @@ TEST(Operator, Addition) {
     EXPECT_EQ(result, answer);
 }
 
-TEST(Operator, Subtraction) {
+TEST(Operator, Subtraction)
+{
     using namespace Vectored;
     Acceleration acceleration(1, 2, 3);
     Velocity velocity(2, 5, 6);

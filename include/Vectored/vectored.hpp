@@ -11,25 +11,37 @@ namespace Internal {
 class SuperVectored : public Eigen::Vector3d {
 public:
     SuperVectored()
-        : Eigen::Vector3d() { }
+        : Eigen::Vector3d()
+    {
+    }
 
     SuperVectored(double x, double y, double z)
-        : Eigen::Vector3d(x, y, z) { }
+        : Eigen::Vector3d(x, y, z)
+    {
+    }
 
     explicit SuperVectored(Eigen::Vector3d vector)
-        : Eigen::Vector3d(std::move(vector)) { }
+        : Eigen::Vector3d(std::move(vector))
+    {
+    }
 
-    Eigen::Vector3d as_vec() {
+    Eigen::Vector3d as_vec()
+    {
         return Eigen::Vector3d { this->x(), this->y(), this->z() };
     }
 
     template<typename T>
-    requires(std::is_base_of_v<SuperVectored, T>) explicit SuperVectored(
+        requires(std::is_base_of_v<SuperVectored, T>)
+    explicit SuperVectored(
         T& vector)
-        : Eigen::Vector3d(vector.as_vec()) { }
+        : Eigen::Vector3d(vector.as_vec())
+    {
+    }
 
     template<typename T>
-    requires(std::is_base_of_v<SuperVectored, T>) T as() {
+        requires(std::is_base_of_v<SuperVectored, T>)
+    T as()
+    {
         T result(*this);
         return result;
     }
@@ -48,13 +60,15 @@ concept VectoredQuantity = std::is_base_of<SuperVectored, Class>::value;
         using Vectored::Internal::SuperVectored::SuperVectored; \
                                                                 \
         template<Vectored::Internal::VectoredQuantity T>        \
-        name operator+(T& other) {                              \
+        name operator+(T& other)                                \
+        {                                                       \
             name result(this->as_vec() += other.as_vec());      \
             return result;                                      \
         }                                                       \
                                                                 \
         template<Vectored::Internal::VectoredQuantity T>        \
-        name operator-(T& other) {                              \
+        name operator-(T& other)                                \
+        {                                                       \
             name result(this->as_vec() -= other.as_vec());      \
             return result;                                      \
         }                                                       \

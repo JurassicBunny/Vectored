@@ -2,6 +2,7 @@
 Language: Cpp
 BasedOnStyle: WebKit
 SpaceAfterTemplateKeyword: false
+IndentRequires: true
 AlignEscapedNewlines: true
 AlignTrailingComments: true
 BreakBeforeInheritanceComma: true
@@ -9,5 +10,5 @@ BreakConstructorInitializers: BeforeComma
 IndentPPDirectives: AfterHash
 BreakBeforeBraces: Custom
 BraceWrapping:
-    AfterFunction: false
+    AfterFunction: true
 NamespaceIndentation: None
