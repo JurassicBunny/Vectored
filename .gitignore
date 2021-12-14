@@ -38,5 +38,8 @@ build
 # .idea
 .idea
 
-#compile_commands.json
+# compile_commands.json
 compile_commands.json
+
+# clangd cache
+.cache

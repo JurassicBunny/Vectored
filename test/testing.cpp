@@ -23,7 +23,7 @@ TEST(Normal, Norm ) {
     int answer = 1;
     Acceleration acceleration(1, 2, 3);
     auto result = acceleration.normalized().norm();
-    ASSERT_EQ(result, answer);
+    EXPECT_EQ(result, answer);
 }
 
 TEST(Operator, Addition) {
