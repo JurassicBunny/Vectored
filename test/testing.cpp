@@ -1,4 +1,4 @@
-#include "../include/Vectored/vectored.h"
+#include "../include/Vectored/vectored.hpp"
 #include <gtest/gtest.h>
 
 TEST(Constructor, Constructor)  {
