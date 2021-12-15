@@ -47,8 +47,32 @@ public:
     }
 };
 
+class SuperScalar {
+private:
+    double m_scalar;
+
+public:
+    SuperScalar()
+        : m_scalar(0)
+    {
+    }
+
+    explicit SuperScalar(double value)
+        : m_scalar(value)
+    {
+    }
+
+    double as_value()
+    {
+        return this->m_scalar;
+    }
+};
+
 template<typename Class>
 concept VectoredQuantity = std::is_base_of<SuperVectored, Class>::value;
+
+template<typename Class>
+concept ScalarQuantity = std::is_base_of<SuperScalar, Class>::value;
 
 } // namespace Internal
 
@@ -72,6 +96,61 @@ concept VectoredQuantity = std::is_base_of<SuperVectored, Class>::value;
             name result(this->as_vec() -= other.as_vec());      \
             return result;                                      \
         }                                                       \
+                                                                \
+        template<Vectored::Internal::ScalarQuantity T>          \
+        name operator*(T& other)                                \
+        {                                                       \
+            name result(this->as_vec() * other.as_value());     \
+            return result;                                      \
+        }                                                       \
+    }
+
+#define SCALAR(name)                                          \
+    class name : public Vectored::Internal::SuperScalar {     \
+    public:                                                   \
+        using Vectored::Internal::SuperScalar::SuperScalar;   \
+                                                              \
+        template<Vectored::Internal::ScalarQuantity T>        \
+        name operator+(T& other)                              \
+        {                                                     \
+            name result(this->as_value() + other.as_value()); \
+            return result;                                    \
+        }                                                     \
+                                                              \
+        template<Vectored::Internal::ScalarQuantity T>        \
+        name operator-(T& other)                              \
+        {                                                     \
+            name result(this->as_value() - other.as_value()); \
+            return result;                                    \
+        }                                                     \
+                                                              \
+        template<typename T>                                  \
+        name operator*(T other)                               \
+        {                                                     \
+            name result(this->as_value() * other);            \
+            return result;                                    \
+        }                                                     \
+                                                              \
+        template<Vectored::Internal::VectoredQuantity T>      \
+        T operator*(T& other)                                 \
+        {                                                     \
+            T result(this->as_value() * other.as_vec());      \
+            return result;                                    \
+        }                                                     \
+                                                              \
+        template<Vectored::Internal::ScalarQuantity T>        \
+        name operator*(T& other)                              \
+        {                                                     \
+            name result(this->as_value() * other.as_value()); \
+            return result;                                    \
+        }                                                     \
+                                                              \
+        template<Vectored::Internal::ScalarQuantity T>        \
+        name operator/(T& other)                              \
+        {                                                     \
+            name result(this->as_value() / other.as_value()); \
+            return result;                                    \
+        }                                                     \
     }
 
 namespace Vectored {
@@ -81,3 +160,19 @@ VECTORED(Momentum);
 VECTORED(Position);
 VECTORED(Velocity);
 } // namespace Vectored
+
+namespace Scalar {
+SCALAR(Time);
+SCALAR(Mass);
+}
+
+int main()
+{
+    using namespace Vectored;
+    using namespace Scalar;
+
+    Acceleration acceleration(1, 2, 3);
+    Time time(13.0);
+    time* time;
+    Mass mass(10);
+}
