@@ -31,7 +31,7 @@ public:
     }
 
     template<typename T>
-        requires(std::is_base_of_v<SuperVectored, T>)
+        requires(std::is_base_of<SuperVectored, T>::value)
     explicit SuperVectored(
         T& vector)
         : Eigen::Vector3d(vector.as_vec())
@@ -39,7 +39,7 @@ public:
     }
 
     template<typename T>
-        requires(std::is_base_of_v<SuperVectored, T>)
+        requires(std::is_base_of<SuperVectored, T>::value)
     T as()
     {
         T result(*this);
@@ -152,6 +152,18 @@ concept ScalarQuantity = std::is_base_of<SuperScalar, Class>::value;
             return result;                                    \
         }                                                     \
     }
+
+namespace Vectored {
+
+namespace Internal {
+template<ScalarQuantity T>
+double operator*(double fst, T& other)
+{
+    auto result = fst * other.as_value();
+    return result;
+}
+}
+}
 
 namespace Vectored {
 VECTORED(Acceleration);
