@@ -14,15 +14,18 @@ project(${PROJECT_NAME})
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+# find the Eigen3 package
+find_package(Eigen3 3.3 REQUIRED NO_MODULE)
+
 # add library
 add_library(${PROJECT_NAME} INTERFACE)
 
 # include directories
 target_include_directories(
         ${PROJECT_NAME}
-        ${EIGEN_INCLUDE_DIR}
-        INTERFACE $<BUILD_INTERFACE:${PROJECT_NAME}/include/Vectored>
-                  $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+        INTERFACE 
+                $<BUILD_INTERFACE:${PROJECT_NAME}/include/Vectored>
+                $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
 
 # export the c++ 20 standard when using this library
