@@ -55,4 +55,5 @@ install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/Vectored
         DESTINATION include)
 
 #Google testing
-add_subdirectory(test EXCLUDE_FROM_ALL)
+enable_testing()
+add_subdirectory(test)
