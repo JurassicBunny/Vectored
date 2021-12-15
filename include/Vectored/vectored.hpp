@@ -165,14 +165,3 @@ namespace Scalar {
 SCALAR(Time);
 SCALAR(Mass);
 }
-
-int main()
-{
-    using namespace Vectored;
-    using namespace Scalar;
-
-    Acceleration acceleration(1, 2, 3);
-    Time time(13.0);
-    time* time;
-    Mass mass(10);
-}
