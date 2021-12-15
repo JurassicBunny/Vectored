@@ -27,7 +27,6 @@ target_include_directories(
                 $<BUILD_INTERFACE:${PROJECT_NAME}/include/Vectored>
                 $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
-
 # export the c++ 20 standard when using this library
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_20)
 
