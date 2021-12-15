@@ -1,8 +1,11 @@
 @PACKAGE_INIT@
 
 include(CMakeFindDependencyMacro)
-include("${CMAKE_CURRENT_LIST_DIR}/VectoredTargets.cmake")
 
 find_dependency(Eigen3)
+
+if(NOT TARGET Vectored::Vectored)
+    include(${VECTORED_CMAKE_DIR}/VectoredTargets.cmake)
+endif()
 
 check_required_components("@PROJECT_NAME@")
