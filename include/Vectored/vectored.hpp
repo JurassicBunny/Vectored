@@ -86,14 +86,14 @@ concept ScalarQuantity = std::is_base_of<SuperScalar, Class>::value;
         template<Vectored::Internal::VectoredQuantity T>        \
         name operator+(T& other)                                \
         {                                                       \
-            name result(this->as_vec() += other.as_vec());      \
+            name result(this->as_vec() + other.as_vec());       \
             return result;                                      \
         }                                                       \
                                                                 \
         template<Vectored::Internal::VectoredQuantity T>        \
         name operator-(T& other)                                \
         {                                                       \
-            name result(this->as_vec() -= other.as_vec());      \
+            name result(this->as_vec() - other.as_vec());       \
             return result;                                      \
         }                                                       \
                                                                 \
@@ -110,10 +110,24 @@ concept ScalarQuantity = std::is_base_of<SuperScalar, Class>::value;
     public:                                                   \
         using Vectored::Internal::SuperScalar::SuperScalar;   \
                                                               \
+        template<typename T>                                  \
+        name operator+(T other)                               \
+        {                                                     \
+            name result(this->as_value() + other);            \
+            return result;                                    \
+        }                                                     \
+                                                              \
         template<Vectored::Internal::ScalarQuantity T>        \
         name operator+(T& other)                              \
         {                                                     \
             name result(this->as_value() + other.as_value()); \
+            return result;                                    \
+        }                                                     \
+                                                              \
+        template<typename T>                                  \
+        name operator-(T other)                               \
+        {                                                     \
+            name result(this->as_value() - other);            \
             return result;                                    \
         }                                                     \
                                                               \
@@ -145,6 +159,13 @@ concept ScalarQuantity = std::is_base_of<SuperScalar, Class>::value;
             return result;                                    \
         }                                                     \
                                                               \
+        template<typename T>                                  \
+        name operator/(T& other)                              \
+        {                                                     \
+            name result(this->as_value() / other);            \
+            return result;                                    \
+        }                                                     \
+                                                              \
         template<Vectored::Internal::ScalarQuantity T>        \
         name operator/(T& other)                              \
         {                                                     \
@@ -156,14 +177,38 @@ concept ScalarQuantity = std::is_base_of<SuperScalar, Class>::value;
 namespace Vectored {
 
 namespace Internal {
+
 template<ScalarQuantity T>
-double operator*(double fst, T& other)
+T operator-(double fst, T& other)
+{
+    auto result = fst - other;
+    return result;
+}
+
+template<ScalarQuantity T>
+T operator+(double fst, T& other)
+{
+    auto result = fst + other;
+    return result;
+}
+
+template<ScalarQuantity T>
+T operator*(double fst, T& other)
 {
     auto result = fst * other.as_value();
     return result;
 }
+
+template<VectoredQuantity T>
+T operator*(double fst, T& other)
+{
+    auto result = fst * other.as_value();
+    return result;
 }
-}
+
+} // namespace Internal
+
+} // namespace Vectored
 
 namespace Vectored {
 VECTORED(Acceleration);
