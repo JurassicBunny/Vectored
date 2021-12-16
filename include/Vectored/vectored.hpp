@@ -57,7 +57,7 @@ public:
     {
     }
 
-    explicit SuperScalar(double value)
+    SuperScalar(double value)
         : m_scalar(value)
     {
     }
