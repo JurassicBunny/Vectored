@@ -211,7 +211,7 @@ T operator+(T& fst, U& other)
 template<VectoredQuantity T, VectoredQuantity U>
 T operator-(T& fst, U& other)
 {
-    T result(fst.as_vec() * other.as_vec());
+    T result(fst.as_vec() - other.as_vec());
     return result;
 }
 
