@@ -251,20 +251,3 @@ namespace Scalar {
 SCALAR(Time);
 SCALAR(Mass);
 } // namespace Scalar
-
-int main()
-{
-    using namespace Vectored;
-    using namespace Scalar;
-
-    Acceleration acceleartion(1, 2, 3);
-    Mass mass(1.0);
-    Time time(1e-9);
-
-    Time result = 1.0 - time;
-    auto result1 = time - 1.0;
-    Time result2 = time - time;
-    Time result3 = time / time;
-    auto result4 = time / mass;
-    auto result5 = mass * acceleartion;
-}
