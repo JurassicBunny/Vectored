@@ -8,26 +8,29 @@ namespace Vectored {
 
 namespace Internal {
 
-class SuperVectored : public Eigen::Vector3d {
+class SuperVectored {
+private:
+    Eigen::Vector3d m_vec;
+
 public:
     SuperVectored()
-        : Eigen::Vector3d()
+        : m_vec(Eigen::Vector3d(0, 0, 0))
     {
     }
 
     SuperVectored(double x, double y, double z)
-        : Eigen::Vector3d(x, y, z)
+        : m_vec(Eigen::Vector3d(x, y, z))
     {
     }
 
     explicit SuperVectored(Eigen::Vector3d vector)
-        : Eigen::Vector3d(std::move(vector))
+        : m_vec(std::move(vector))
     {
     }
 
     Eigen::Vector3d as_vec()
     {
-        return Eigen::Vector3d { this->x(), this->y(), this->z() };
+        return this->m_vec;
     }
 
     template<typename T>
@@ -42,7 +45,7 @@ public:
         requires(std::is_base_of<SuperVectored, T>::value)
     T as()
     {
-        T result(*this);
+        T result(this->m_vec);
         return result;
     }
 };
@@ -202,14 +205,14 @@ namespace Vectored {
 namespace Internal {
 
 template<VectoredQuantity T, VectoredQuantity U>
-T operator+(T& fst, U& other)
+T operator+(T fst, U other)
 {
     T result(fst.as_vec() + other.as_vec());
     return result;
 }
 
 template<VectoredQuantity T, VectoredQuantity U>
-T operator-(T& fst, U& other)
+T operator-(T fst, U other)
 {
     T result(fst.as_vec() - other.as_vec());
     return result;
@@ -251,3 +254,14 @@ namespace Scalar {
 SCALAR(Time);
 SCALAR(Mass);
 } // namespace Scalar
+
+int main()
+{
+    using namespace Vectored;
+    using namespace Scalar;
+
+    Acceleration accleration(1, 2, 3);
+    Velocity velocity(0, 1, 0);
+    Time time(10);
+    Acceleration result = time * accleration - accleration;
+}
