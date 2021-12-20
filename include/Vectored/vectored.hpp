@@ -254,14 +254,3 @@ namespace Scalar {
 SCALAR(Time);
 SCALAR(Mass);
 } // namespace Scalar
-
-int main()
-{
-    using namespace Vectored;
-    using namespace Scalar;
-
-    Acceleration accleration(1, 2, 3);
-    Velocity velocity(0, 1, 0);
-    Time time(10);
-    Acceleration result = time * accleration - accleration;
-}
