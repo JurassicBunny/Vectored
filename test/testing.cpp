@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <typeinfo>
 
 #include "../include/Vectored/vectored.hpp"
 
@@ -24,7 +25,7 @@ TEST(Constructor, AS)
     using namespace Vectored;
     Acceleration acceleration(1, 2, 3);
     Velocity velocity(1, 2, 3);
-    EXPECT_EQ(velocity, acceleration.as<Velocity>());
+    EXPECT_TRUE(typeid(velocity).name() == typeid(acceleration.as<Velocity>()).name());
 }
 
 TEST(Normal, Norm)
@@ -43,7 +44,7 @@ TEST(Operator, Addition)
     Velocity velocity(2, 5, 6);
     Acceleration result = acceleration + velocity;
     Acceleration answer(3, 7, 9);
-    EXPECT_EQ(result, answer);
+    EXPECT_EQ(result.as_vec(), answer.as_vec());
 }
 
 TEST(Operator, Subtraction)
@@ -53,5 +54,5 @@ TEST(Operator, Subtraction)
     Velocity velocity(2, 5, 6);
     Acceleration result = acceleration - velocity;
     Acceleration answer(-1, -3, -3);
-    EXPECT_EQ(result, answer);
+    EXPECT_EQ(result.as_vec(), answer.as_vec());
 }
