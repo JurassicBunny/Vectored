@@ -6,9 +6,8 @@ TEST(Constructor, Constructor)
 {
     using namespace Vectored;
     Acceleration acceleration(1, 2, 3);
-    EXPECT_TRUE(acceleration.x() = 1);
-    EXPECT_TRUE(acceleration.y() = 2);
-    EXPECT_TRUE(acceleration.z() = 3);
+    Eigen::Vector3d answer(1, 2, 3);
+    EXPECT_EQ(acceleration.as_vec(), answer);
 }
 
 TEST(Constructor, Cast)
@@ -16,9 +15,9 @@ TEST(Constructor, Cast)
     using namespace Vectored;
     Acceleration acceleration(1, 2, 3);
     Velocity velocity(acceleration);
-    EXPECT_TRUE(velocity.x() = 1);
-    EXPECT_TRUE(velocity.y() = 2);
-    EXPECT_TRUE(velocity.z() = 3);
+    EXPECT_TRUE(velocity.as_vec().x() = 1);
+    EXPECT_TRUE(velocity.as_vec().y() = 2);
+    EXPECT_TRUE(velocity.as_vec().z() = 3);
 }
 TEST(Constructor, AS)
 {
@@ -33,7 +32,7 @@ TEST(Normal, Norm)
     using namespace Vectored;
     int answer = 1;
     Acceleration acceleration(1, 2, 3);
-    auto result = acceleration.normalized().norm();
+    auto result = acceleration.as_vec().normalized().norm();
     EXPECT_EQ(result, answer);
 }
 

@@ -37,7 +37,7 @@ public:
         requires(std::is_base_of<SuperVectored, T>::value)
     explicit SuperVectored(
         T& vector)
-        : Eigen::Vector3d(vector.as_vec())
+        : m_vec(vector.as_vec())
     {
     }
 
