@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include <typeinfo>
+#include <string>
 
 #include "../include/Vectored/vectored.hpp"
 
@@ -55,4 +55,23 @@ TEST(Operator, Subtraction)
     Acceleration result = acceleration - velocity;
     Acceleration answer(-1, -3, -3);
     EXPECT_EQ(result.as_vec(), answer.as_vec());
+}
+
+TEST(Scalar_Vector, Mul)
+{
+    using namespace Vectored;
+    using namespace Scalar;
+    Acceleration acceleration(1, 2, 3);
+    Time time(2);
+    auto result = time * acceleration;
+    EXPECT_EQ(typeid(result).name(), typeid(Acceleration).name());
+}
+TEST(Vector_Scalar, Mul)
+{
+    using namespace Vectored;
+    using namespace Scalar;
+    Acceleration acceleration(1, 2, 3);
+    Time time(2);
+    auto result = acceleration * time;
+    EXPECT_EQ(typeid(result).name(), typeid(Acceleration).name());
 }
