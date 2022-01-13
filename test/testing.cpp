@@ -20,6 +20,7 @@ TEST(Constructor, Cast)
     EXPECT_TRUE(velocity.as_vec().y() = 2);
     EXPECT_TRUE(velocity.as_vec().z() = 3);
 }
+
 TEST(Constructor, AS)
 {
     using namespace Vectored;
@@ -66,6 +67,7 @@ TEST(Scalar_Vector, Mul)
     auto result = time * acceleration;
     EXPECT_EQ(typeid(result).name(), typeid(Acceleration).name());
 }
+
 TEST(Vector_Scalar, Mul)
 {
     using namespace Vectored;
