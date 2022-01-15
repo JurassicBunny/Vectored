@@ -67,7 +67,7 @@ private:
 
 public:
     SuperScalar()
-        : m_scalar(0)
+        : m_scalar(1.0)
     {
     }
 
@@ -240,6 +240,7 @@ T operator*(T& fst, U& other)
 }
 
 } // namespace Internal
+
 } // namespace Vectored
 
 namespace Vectored {
