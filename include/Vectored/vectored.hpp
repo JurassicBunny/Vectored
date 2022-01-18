@@ -120,16 +120,16 @@ T operator+(T& fst, U other)
 }
 
 template<ScalarQuantity T, ScalarQuantity U>
-U operator+(T& fst, U& other)
+T operator+(T& fst, U& other)
 {
-    U result(fst.as_value() + other.as_value());
+    T result(fst.as_value() + other.as_value());
     return result;
 }
 
 template<typename T, ScalarQuantity U>
-T operator-(T fst, U& other)
+U operator-(T fst, U& other)
 {
-    T result(fst - other.as_value());
+    U result(fst - other.as_value());
     return result;
 }
 
@@ -148,16 +148,16 @@ T operator-(T& fst, U& other)
 }
 
 template<typename T, ScalarQuantity U>
-T operator*(T fst, U& other)
+U operator*(T fst, U& other)
 {
-    T result(fst * other.as_value());
+    U result(fst * other.as_value());
     return result;
 }
 
 template<ScalarQuantity T, typename U>
-U operator*(T& fst, U other)
+T operator*(T& fst, U other)
 {
-    U result(fst.as_value() * other);
+    T result(fst.as_value() * other);
     return result;
 }
 
